@@ -13,7 +13,7 @@ import { getProductImageUrl } from "../utils/image";
 import PaymentCard from "./PaymentCard";
 
 const promise = loadStripe(
-  "pk_test_51JWDJoSEXxXeNm52LEM655ANaSY5bVcv8w9Lod4BNKasd1IN0eYJs44obyLm5Be5E7LdB6Yy77hqZSkqnDPaU8eV00w1FFJzWs"
+  "pk_test_51JBzL3SFAGVxUoI4HMLxUv4jU1YB7BjJk5DrYZoVwDQbyAnFVa5YRpqmUUZuQAMqfgijlTjiRLEZunfvpSOMr9gx00UVYf6Ifo"
 );
 
 function Cart({ history, user }) {
@@ -91,7 +91,10 @@ function Cart({ history, user }) {
                 </select>
               </div>
               <div className="col-lg-2">
-                <button className="btn" onClick={() => handleDelete(cartProduct)}>
+                <button
+                  className="btn"
+                  onClick={() => handleDelete(cartProduct)}
+                >
                   <i className="fas fa-trash"></i>
                 </button>
               </div>

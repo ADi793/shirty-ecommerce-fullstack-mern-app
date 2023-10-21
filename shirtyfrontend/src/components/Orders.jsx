@@ -6,7 +6,7 @@ import { getUserOrders } from "../services/orderService";
 import { Link } from "react-router-dom";
 import Table from "./common/Table";
 
-const socket = io.connect("https://shirty-ecommerce-services.herokuapp.com");
+const socket = io.connect("https://shirty-ecommerce-services.onrender.com");
 
 function Orders({ user = {} }) {
   const [orders, setOrders] = useState([]);
@@ -15,17 +15,17 @@ function Orders({ user = {} }) {
   useEffect(() => {
     async function fetchData() {
       const { data: orders } = await getUserOrders();
-      
+
       setOrders(orders);
-  
+
       socket.on(`orderUpdated`, (updatedOrder) => {
-        toast.success('Order status changed!');
+        toast.success("Order status changed!");
         const index = orders.findIndex(
           (order) => order._id === updatedOrder._id
         );
         const updatedOrders = [...orders];
         updatedOrders[index] = updatedOrder;
-  
+
         setOrders(updatedOrders);
       });
     }
@@ -37,13 +37,13 @@ function Orders({ user = {} }) {
     { label: "ID", path: "_id" },
     {
       label: "Date",
-      key: 'date',
+      key: "date",
       path: "createdAt",
       content: (item) => moment(item.createdAt).format("YYYY-MM-DD"),
     },
     {
       label: "Time",
-      key: 'time',
+      key: "time",
       path: "createdAt",
       content: (item) => moment(item.createdAt).format("HH:mm A"),
     },

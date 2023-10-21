@@ -5,20 +5,18 @@ import { toast } from "react-toastify";
 import { getOrders, updateOrderStatus } from "../services/orderService";
 import Table from "./common/Table";
 
-const socket = io.connect("https://shirty-ecommerce-services.herokuapp.com");
+const socket = io.connect("https://shirty-ecommerce-services.onrender.com");
 
 function ManageOrders(props) {
   const [orders, setOrders] = useState([]);
   socket.emit("join", `adminRoom`);
 
-  
-
   useEffect(() => {
     async function fetchData() {
       const { data: savedOrders } = await getOrders();
-  
+
       setOrders(savedOrders);
-  
+
       socket.on("orderPlaced", (order) => {
         setOrders([order, ...savedOrders]);
         toast.success("New order placed...");
@@ -32,7 +30,7 @@ function ManageOrders(props) {
     { label: "ID", path: "_id" },
     {
       label: "Date",
-      key: 'time',
+      key: "time",
       path: "createdAt",
       content: (item) => moment(item.createdAt).format("YYYY-MM-DD"),
     },
@@ -66,18 +64,20 @@ function ManageOrders(props) {
             const index = updatedOrders.indexOf(item);
             updatedOrders[index] = { ...orders[index] };
             updatedOrders[index].status = input.value;
-  
+
             setOrders(updatedOrders);
             await updateOrderStatus(item._id, { status: input.value });
             toast.success("Order status changed.");
-          } catch(ex) {
+          } catch (ex) {
             setOrders(originalOrders);
             toast.success("An unexpected error occured.");
           }
         }}
       >
         {options.map((option) => (
-          <option key={option} value={option}>{option}</option>
+          <option key={option} value={option}>
+            {option}
+          </option>
         ))}
       </select>
     );
